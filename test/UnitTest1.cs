@@ -1,4 +1,4 @@
-﻿namespace yatt_test;
+﻿namespace Yatt.Tests;
 
 public class UnitTest1
 {
