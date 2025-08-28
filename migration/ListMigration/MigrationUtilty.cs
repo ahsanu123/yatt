@@ -16,6 +16,7 @@ public static class MigrationUtility
 
     public static void RunDown(this Migration migration, MigrationChain migrationChain)
     {
+        migrationChain.ListType.Reverse();
         foreach (var type in migrationChain.ListType)
         {
             migration.DeleteTableIfExists(type);

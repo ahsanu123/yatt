@@ -12,4 +12,7 @@ public static class StringExtension
 
         return connStringBuilder.ToString();
     }
+
+    public static SqlConnectionStringBuilder AsConnectionStringModel(this string connString) =>
+        new SqlConnectionStringBuilder(connString);
 }

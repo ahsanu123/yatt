@@ -1,4 +1,5 @@
 using Dapper;
+using YATT.Migrations.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -11,14 +12,16 @@ public static class ConfigurationExtension
     public static bool IsDatabaseExists(this IServiceProvider serviceProvider, string databaseName)
     {
         var configuration = serviceProvider.GetService<IConfiguration>();
-        var yattDatabaseConfig = serviceProvider.GetOption<YattDatabaseConfig>();
 
-        if (configuration == null || yattDatabaseConfig == null)
+        if (configuration == null)
             throw new NullReferenceException();
 
         var yattConnString = configuration.GetConnectionString(ConnectionStringConfig.YattDb);
 
-        using (var conn = new SqlConnection(yattConnString))
+        var masterConnStringModel = yattConnString!.AsConnectionStringModel();
+        masterConnStringModel.InitialCatalog = "master";
+
+        using (var conn = new SqlConnection(masterConnStringModel.ToString()))
         {
             conn.Open();
             var databaseCount = conn.ExecuteScalar<int>(
@@ -39,7 +42,10 @@ public static class ConfigurationExtension
 
         var yattConnString = configuration.GetConnectionString(ConnectionStringConfig.YattDb);
 
-        using (var conn = new SqlConnection(yattConnString))
+        var masterConnStringModel = yattConnString!.AsConnectionStringModel();
+        masterConnStringModel.InitialCatalog = "master";
+
+        using (var conn = new SqlConnection(masterConnStringModel.ToString()))
         {
             conn.Open();
 
