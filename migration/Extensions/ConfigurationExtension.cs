@@ -1,0 +1,52 @@
+using Dapper;
+using Microsoft.Data.SqlClient;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using YATT.Migrations.Configs;
+
+namespace YATT.Migrations.Extensions;
+
+public static class ConfigurationExtension
+{
+    public static bool IsDatabaseExists(this IServiceProvider serviceProvider, string databaseName)
+    {
+        var configuration = serviceProvider.GetService<IConfiguration>();
+        var yattDatabaseConfig = serviceProvider.GetOption<YattDatabaseConfig>();
+
+        if (configuration == null || yattDatabaseConfig == null)
+            throw new NullReferenceException();
+
+        var yattConnString = configuration.GetConnectionString(ConnectionStringConfig.YattDb);
+
+        using (var conn = new SqlConnection(yattConnString))
+        {
+            conn.Open();
+            var databaseCount = conn.ExecuteScalar<int>(
+                $"SELECT COUNT(*) FROM sys.databases WHERE name = @dbName",
+                new { dbName = databaseName }
+            );
+            return databaseCount > 0;
+        }
+    }
+
+    public static void CreateNewDatabaseIfNotExists(this IServiceProvider serviceProvider)
+    {
+        var configuration = serviceProvider.GetService<IConfiguration>();
+        var yattDatabaseConfig = serviceProvider.GetOption<YattDatabaseConfig>();
+
+        if (configuration == null || yattDatabaseConfig == null)
+            throw new NullReferenceException();
+
+        var yattConnString = configuration.GetConnectionString(ConnectionStringConfig.YattDb);
+
+        using (var conn = new SqlConnection(yattConnString))
+        {
+            conn.Open();
+
+            var databaseName = yattDatabaseConfig.Value.DatabaseName;
+
+            if (!serviceProvider.IsDatabaseExists(databaseName))
+                conn.Execute($"CREATE DATABASE [{databaseName}]");
+        }
+    }
+}

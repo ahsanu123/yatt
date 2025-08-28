@@ -1,0 +1,5 @@
+tl: 
+  dotnet test -t 
+
+tr TestName:
+  dotnet test --logger="console;verbosity=detailed" --filter {{TestName}}

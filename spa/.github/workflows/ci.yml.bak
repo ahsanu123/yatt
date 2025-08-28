@@ -1,0 +1,43 @@
+name: CI
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  test:
+    strategy:
+      matrix:
+        include:
+          - os: ubuntu-latest
+            browser: firefox
+          - os: ubuntu-latest
+            browser: chromium
+          - os: macos-latest
+            browser: webkit
+          - os: windows-latest
+            browser: msedge
+      fail-fast: false
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 10
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: "pnpm"
+      - uses: denoland/setup-deno@v2
+        with:
+          deno-version: v2.3.3
+      - name: Install dependencies
+        run: pnpm install
+      - name: Install Playwright Browsers
+        working-directory: .tests
+        run: pnpm playwright install --with-deps ${{ matrix.browser }}
+      - name: Run Playwright tests
+        working-directory: .tests
+        run: pnpm test --project=${{ matrix.browser }}
