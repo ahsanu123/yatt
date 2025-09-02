@@ -4,6 +4,7 @@ using FluentMigrator;
 using FluentMigrator.Builders.Create.Table;
 using YATT.Migrations.Attributes;
 using YATT.Migrations.Extensions;
+using YATT.Migrations.ListMigration.ModelMigration1;
 
 namespace YATT.Migrations.Mappers;
 
@@ -23,12 +24,33 @@ public static class ModelToMigration
         return withColumnSyntax;
     }
 
+    public static Migration RemoveForeignKeyFromType(
+        this Migration migration,
+        Type modelType,
+        Func<Type, PropertyInfo[]>? propSelector = null
+    )
+    {
+        var tableName = modelType.Name;
+        var props = propSelector == null ? modelType.GetProperties() : propSelector(modelType);
+
+        foreach (var prop in props)
+        {
+            var foreignKeyAttr = prop.GetCustomAttribute<ForeignKeyAttribute>();
+            if (foreignKeyAttr == null)
+                continue;
+
+            var columnName = prop.Name;
+            var columnNameWithForeignKey = $"FK_{tableName}_{columnName}_{foreignKeyAttr.Target.DeclaringType!.Name}_{foreignKeyAttr.Target.Name}";
+
+            migration.Delete.ForeignKey(columnNameWithForeignKey).OnTable(tableName);
+        }
+
+        return migration;
+    }
+
     public static Migration GenerateForeignKeyFromType(this Migration migration, Type modelType)
     {
         var tableName = modelType.Name;
-        var isTableNameAlreadyExist = migration.CheckIfTableExists(modelType);
-        if (isTableNameAlreadyExist)
-            tableName = $"{tableName}_Temp";
 
         foreach (var prop in modelType.GetProperties())
         {
@@ -70,10 +92,6 @@ public static class ModelToMigration
 
         foreach (var prop in modelType.GetProperties())
         {
-            // RULE:
-            //   primary key must have name exactly same as <tableName>Id,
-            //   other than that colum name that contain id will
-            //   considered foreign key to another table
             var columnName = prop.Name;
             var column = table.WithColumn(prop.Name);
 
@@ -88,6 +106,7 @@ public static class ModelToMigration
                 .GetCustomAttributes<DontCreateIdentityAttribute>()
                 .Any();
 
+            // TODO: Change this long if into better way, with list or map maybe.
             if (primaryKeyAttr != null && !isDontCreateIdentity)
             {
                 column.AsInt64().Nullable().Identity().PrimaryKey();
@@ -142,6 +161,11 @@ public static class ModelToMigration
             if (typeof(float) == actualType)
             {
                 column.AsFloat().IsNullable(prop);
+            }
+
+            if (typeof(Coordinate) == actualType)
+            {
+                column.AsString(int.MaxValue).IsNullable(prop);
             }
         }
         return migration;

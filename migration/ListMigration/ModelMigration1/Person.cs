@@ -2,10 +2,9 @@ using YATT.Migrations.Attributes;
 
 namespace YATT.Migrations.ListMigration.ModelMigration1;
 
-public class EventType
+public class Person
 {
     [PrimaryKey]
     public long Id { get; set; }
-
-    public string DisplayName { get; set; } = String.Empty;
 }
+

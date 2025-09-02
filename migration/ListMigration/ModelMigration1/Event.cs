@@ -10,6 +10,13 @@ public class Event
     [ForeignKey(typeof(EventType), propName: nameof(EventType.Id))]
     public long EventTypeId { get; set; }
 
-    public string Name { get; set; }
+    [ForeignKey(typeof(Location), propName: nameof(Location.Id))]
+    public long LocationId { get; set; }
+
+    public string Name { get; set; } = String.Empty;
+
+    public DateTimeOffset Date { get; set; }
+
+    // Persons -> use EventPerson
 
 }

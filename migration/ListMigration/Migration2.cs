@@ -3,12 +3,12 @@ using YATT.Migrations.ListMigration.ModelMigration1;
 
 namespace YATT.Migrations.ListMigration;
 
-[Migration(MigrationVersionList.Version1, description: "migrating basic table structure")]
-public class Migration1 : BaseMigrationRunner
+[Migration(MigrationVersionList.Version2, description: "add foreign key to table")]
+public class Migration2 : BaseMigrationRunner
 {
     public MigrationChain MigrationChain = new MigrationChain()
-        .AddType(typeof(Location))
         .AddType(typeof(Coordinate))
+        .AddType(typeof(Location))
         .AddType(typeof(Event))
         .AddType(typeof(EventPerson))
         .AddType(typeof(EventType))
@@ -19,11 +19,11 @@ public class Migration1 : BaseMigrationRunner
 
     public override void Up()
     {
-        RunUp(MigrationChain);
+        AddForeignKey(MigrationChain);
     }
 
     public override void Down()
     {
-        RunDown(MigrationChain);
+        RemoveForeignKey(MigrationChain);
     }
 }
