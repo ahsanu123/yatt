@@ -15,7 +15,8 @@ public class Migration2 : BaseMigrationRunner
         .AddType(typeof(Person))
         .AddType(typeof(Project))
         .AddType(typeof(Report))
-        .AddType(typeof(TimeLog));
+        .AddType(typeof(TimeLog))
+        .AddType(IdentityStatic.AspnetCoreIdentityModel);
 
     public override void Up()
     {
