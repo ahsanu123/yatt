@@ -82,4 +82,21 @@ public class MigrationRunnerTest : MigrationBaseTest
 
         migrationRunner.MigrateUp(MigrationVersionList.Version2);
     }
+
+    [Fact]
+    public void WhatByteLookLike()
+    {
+        var byteType = typeof(byte);
+        var arrayOfByte = typeof(byte[]);
+
+        _output.WriteLine(byteType.FullName);
+        _output.WriteLine($"is array: {byteType.IsArray}");
+
+        _output.WriteLine(arrayOfByte.FullName);
+        _output.WriteLine($"is array: {arrayOfByte.IsArray}");
+
+        _output.WriteLine($"Array of byte is not same with byte: {(byteType == arrayOfByte).ToString()}");
+        _output.WriteLine($"Array of byte is same with array of byte: {(typeof(byte[]) == arrayOfByte).ToString()}");
+    }
+
 }

@@ -167,6 +167,11 @@ public static class ModelToMigration
             {
                 column.AsString(int.MaxValue).IsNullable(prop);
             }
+
+            if (typeof(byte[]) == actualType)
+            {
+                column.AsBinary(int.MaxValue).IsNullable(prop);
+            }
         }
         return migration;
     }
