@@ -4,8 +4,8 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YATT.Libs.Databases;
+using YATT.Libs.Identities;
 using YATT.Migrations.Configs;
-
 using YattIdentityRole = YATT.Libs.Models.IdentityRole;
 using YattIdentityUser = YATT.Libs.Models.IdentityUser;
 
@@ -40,13 +40,26 @@ public static class ServiceCollectionExtension
         return services;
     }
 
-    public static IServiceCollection AddAspnetCoreIdentity(this IServiceCollection services, string connectionString)
+    public static IServiceCollection AddAspnetCoreIdentity(
+        this IServiceCollection services,
+        string connectionString
+    )
     {
-
         var connectionFactory = new YattDefaultConnectionFactory(connectionString);
+
         services
             .AddIdentity<YattIdentityUser, YattIdentityRole>()
-            .AddLinqToDBStores<long>(connectionFactory)
+            .AddLinqToDBStores(
+                connectionFactory,
+                typeof(long),
+                typeof(YATT.Libs.Models.IdentityUserClaim),
+                typeof(YATT.Libs.Models.IdentityUserRole),
+                typeof(YATT.Libs.Models.IdentityUserLogin),
+                typeof(YATT.Libs.Models.IdentityUserToken),
+                typeof(YATT.Libs.Models.IdentityRoleClaim)
+            )
+            .AddUserManager<YattUserManager>()
+            .AddRoleManager<YattRoleManager>()
             .AddDefaultTokenProviders();
 
         return services;

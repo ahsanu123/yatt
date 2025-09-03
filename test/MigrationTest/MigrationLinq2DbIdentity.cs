@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using YATT.Libs.Identities;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 using YATT.Migrations.Extensions;
@@ -77,6 +78,28 @@ public class MigrationLinq2DbIdentityTest : MigrationBaseTest
         else
             _output.WriteLine("Username Already Exists");
 
+    }
+
+    [Fact]
+    public void AssignUserToRole()
+    {
+        var serviceProvider = GetServiceProvider();
+
+        var userManager = serviceProvider.GetService<YattUserManager>();
+        var roleManager = serviceProvider.GetService<YattRoleManager>();
+
+        Assert.NotNull(userManager);
+        Assert.NotNull(roleManager);
+
+        var user = userManager.FindByEmailAsync("caasperahsanuamala5@gmail.com").GetValue();
+        var role = roleManager.FindByNameAsync(UserRoles.Employee.ToString().ToUpper()).GetValue();
+
+        Assert.NotNull(user);
+        Assert.NotNull(role);
+
+        var result = userManager.AddToRoleAsync(user, role.NormalizedName).GetValue();
+
+        _output.SerializeObject(result);
     }
 
     [Fact]
