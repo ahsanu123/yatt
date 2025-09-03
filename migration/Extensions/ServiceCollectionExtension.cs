@@ -1,8 +1,12 @@
 using System.Reflection;
 using FluentMigrator.Runner;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using YATT.Migrations.Configs;
+using YATT.Migrations.ListMigration;
+using YattIdentityRole = YATT.Migrations.ListMigration.TableMigration1.IdentityRole;
+using YattIdentityUser = YATT.Migrations.ListMigration.TableMigration1.IdentityUser;
 
 namespace YATT.Migrations.Extensions;
 
@@ -29,6 +33,20 @@ public static class ServiceCollectionExtension
                         .For.All()
             )
             .AddLogging();
+
+        services.AddAspnetCoreIdentity(connectionString: yattConnString!);
+
+        return services;
+    }
+
+    public static IServiceCollection AddAspnetCoreIdentity(this IServiceCollection services, string connectionString)
+    {
+
+        var connectionFactory = new YattDefaultConnectionFactory(connectionString);
+        services
+            .AddIdentity<YattIdentityUser, YattIdentityRole>()
+            .AddLinqToDBStores<long>(connectionFactory)
+            .AddDefaultTokenProviders();
 
         return services;
     }

@@ -1,5 +1,5 @@
 using FluentMigrator;
-using YATT.Migrations.ListMigration.ModelMigration1;
+using YATT.Migrations.ListMigration.TableMigration1;
 
 namespace YATT.Migrations.ListMigration;
 
@@ -7,7 +7,6 @@ namespace YATT.Migrations.ListMigration;
 public class Migration2 : BaseMigrationRunner
 {
     public MigrationChain MigrationChain = new MigrationChain()
-        .AddType(typeof(Coordinate))
         .AddType(typeof(Location))
         .AddType(typeof(Event))
         .AddType(typeof(EventPerson))

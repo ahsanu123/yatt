@@ -5,7 +5,7 @@ namespace YATT.Tests.Migrations;
 
 public class TestFixture : IDisposable
 {
-    protected ServiceCollection serviceCollection = new ServiceCollection();
+    public ServiceCollection serviceCollection = new ServiceCollection();
     public AsyncServiceScope serviceScope;
 
     public TestFixture()

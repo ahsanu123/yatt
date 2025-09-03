@@ -1,45 +1,63 @@
-using Microsoft.AspNetCore.Identity;
+using LinqToDB.Identity;
 using YATT.Migrations.Attributes;
 
-namespace YATT.Migrations.ListMigration.ModelMigration1;
+namespace YATT.Migrations.ListMigration.TableMigration1;
 
-class IdentityRole : IdentityRole<long>
+public class IdentityRole : IdentityRole<long>
 {
-    [PrimaryKey]
+    [PrimaryKey, LinqToDB.Mapping.PrimaryKey, LinqToDB.Mapping.Identity]
     public override long Id { get; set; }
+
+    public IdentityRole() { }
+
+    public IdentityRole(string roleName)
+    {
+        Name = roleName;
+        NormalizedName = roleName.ToUpper();
+    }
 }
 
-class IdentityRoleClaim : IdentityRoleClaim<long>
+public class IdentityRoleClaim : IdentityRoleClaim<long>
 {
-    [PrimaryKey]
+    [PrimaryKey, LinqToDB.Mapping.PrimaryKey, LinqToDB.Mapping.Identity]
     public override int Id { get; set; }
 
     [ForeignKey(typeof(IdentityRole), propName: nameof(IdentityRole.Id))]
     public override long RoleId { get; set; }
 }
 
-class IdentityUser : IdentityUser<long>
+public class IdentityUser : IdentityUser<long>
 {
-    [PrimaryKey]
+    [PrimaryKey, LinqToDB.Mapping.PrimaryKey, LinqToDB.Mapping.Identity]
     public override long Id { get; set; }
+
+    public IdentityUser() { }
+
+    public IdentityUser(string username, string email)
+    {
+        UserName = username;
+        Email = email;
+        NormalizedUserName = username.ToUpper();
+        NormalizedEmail = email.ToLower();
+    }
 }
 
-class IdentityUserClaim : IdentityUserClaim<long>
+public class IdentityUserClaim : IdentityUserClaim<long>
 {
-    [PrimaryKey]
+    [PrimaryKey, LinqToDB.Mapping.PrimaryKey, LinqToDB.Mapping.Identity]
     public override int Id { get; set; }
 
     [ForeignKey(typeof(IdentityUser), propName: nameof(IdentityUser.Id))]
     public override long UserId { get; set; }
 }
 
-class IdentityUserLogin : IdentityUserLogin<long>
+public class IdentityUserLogin : IdentityUserLogin<long>
 {
     [ForeignKey(typeof(IdentityUser), propName: nameof(IdentityUser.Id))]
     public override long UserId { get; set; }
 }
 
-class IdentityUserRole : IdentityUserRole<long>
+public class IdentityUserRole : IdentityUserRole<long>
 {
     [ForeignKey(typeof(IdentityUser), propName: nameof(IdentityUser.Id))]
     public override long UserId { get; set; }
@@ -48,7 +66,7 @@ class IdentityUserRole : IdentityUserRole<long>
     public override long RoleId { get; set; }
 }
 
-class IdentityUserToken : IdentityUserToken<long>
+public class IdentityUserToken : IdentityUserToken<long>
 {
     [ForeignKey(typeof(IdentityUser), propName: nameof(IdentityUser.Id))]
     public override long UserId { get; set; }

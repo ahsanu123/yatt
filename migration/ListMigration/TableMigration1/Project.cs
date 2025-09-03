@@ -1,6 +1,6 @@
 using YATT.Migrations.Attributes;
 
-namespace YATT.Migrations.ListMigration.ModelMigration1;
+namespace YATT.Migrations.ListMigration.TableMigration1;
 
 public class Project
 {

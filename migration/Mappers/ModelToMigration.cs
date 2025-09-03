@@ -1,15 +1,37 @@
+using System.Collections;
 using System.Data;
 using System.Reflection;
 using FluentMigrator;
 using FluentMigrator.Builders.Create.Table;
 using YATT.Migrations.Attributes;
 using YATT.Migrations.Extensions;
-using YATT.Migrations.ListMigration.ModelMigration1;
+using YATT.Migrations.ListMigration.TableMigration1;
 
 namespace YATT.Migrations.Mappers;
 
 public static class ModelToMigration
 {
+    private static List<Type> ExludedTypes =>
+        new List<Type>
+        {
+            typeof(IEnumerable<>),
+            typeof(ICollection<>),
+            typeof(ICollection),
+            typeof(IEnumerable),
+        };
+
+    public static bool IsExcludedType(Type type)
+    {
+        type = Nullable.GetUnderlyingType(type) ?? type;
+        if (type == typeof(string))
+            return false;
+
+        if (type == typeof(byte[]))
+            return false;
+
+        return typeof(IEnumerable).IsAssignableFrom(type);
+    }
+
     public static ICreateTableColumnOptionOrWithColumnSyntax IsNullable(
         this ICreateTableColumnOptionOrWithColumnSyntax withColumnSyntax,
         PropertyInfo propInfo
@@ -40,7 +62,8 @@ public static class ModelToMigration
                 continue;
 
             var columnName = prop.Name;
-            var columnNameWithForeignKey = $"FK_{tableName}_{columnName}_{foreignKeyAttr.Target.DeclaringType!.Name}_{foreignKeyAttr.Target.Name}";
+            var columnNameWithForeignKey =
+                $"FK_{tableName}_{columnName}_{foreignKeyAttr.Target.DeclaringType!.Name}_{foreignKeyAttr.Target.Name}";
 
             migration.Delete.ForeignKey(columnNameWithForeignKey).OnTable(tableName);
         }
@@ -90,12 +113,17 @@ public static class ModelToMigration
 
         var table = migration.Create.Table(tableName);
 
-        foreach (var prop in modelType.GetProperties())
+        var propBindingFlag =
+            BindingFlags.Public | BindingFlags.FlattenHierarchy | BindingFlags.Instance;
+
+        foreach (var prop in modelType.GetProperties(propBindingFlag))
         {
+            if (IsExcludedType(prop.PropertyType))
+                continue;
+
             var columnName = prop.Name;
             var column = table.WithColumn(prop.Name);
 
-            var type = prop.GetType();
             var propertyType = prop.PropertyType;
             var actualType = Nullable.GetUnderlyingType(propertyType) ?? propertyType;
 
@@ -112,66 +140,60 @@ public static class ModelToMigration
                 column.AsInt64().Nullable().Identity().PrimaryKey();
                 continue;
             }
-            if (foreignKeyAttr != null && !isDontCreateIdentity)
+            else if (foreignKeyAttr != null && !isDontCreateIdentity)
             {
                 column.AsInt64().IsNullable(prop);
                 continue;
             }
-
-            if (typeof(string) == actualType)
+            else if (typeof(string) == actualType)
             {
-                column.AsString(int.MaxValue).IsNullable(prop);
+                column.AsString(int.MaxValue).Nullable();
             }
-
-            if (typeof(bool) == actualType)
+            else if (typeof(bool) == actualType)
             {
                 column.AsBoolean().IsNullable(prop);
             }
-
-            if (typeof(DateTime) == actualType)
+            else if (typeof(DateTime) == actualType)
             {
                 column.AsDate().IsNullable(prop);
             }
-
-            if (typeof(DateTimeOffset) == actualType)
+            else if (typeof(DateTimeOffset) == actualType)
             {
                 column.AsDateTimeOffset().IsNullable(prop);
             }
-
-            if (typeof(double) == actualType)
+            else if (typeof(double) == actualType)
             {
                 column.AsDouble().IsNullable(prop);
             }
-
-            if (typeof(Int16) == actualType)
+            else if (typeof(Int16) == actualType)
             {
                 column.AsInt16().IsNullable(prop);
             }
-
-            if (typeof(int) == actualType)
+            else if (typeof(int) == actualType)
             {
                 column.AsInt32().IsNullable(prop);
             }
-
-            if (typeof(Int64) == actualType)
+            else if (typeof(Int64) == actualType)
             {
                 column.AsInt64().IsNullable(prop);
             }
-
-            if (typeof(float) == actualType)
+            else if (typeof(float) == actualType)
             {
                 column.AsFloat().IsNullable(prop);
             }
-
-            if (typeof(Coordinate) == actualType)
-            {
-                column.AsString(int.MaxValue).IsNullable(prop);
-            }
-
-            if (typeof(byte[]) == actualType)
+            else if (typeof(byte[]) == actualType)
             {
                 column.AsBinary(int.MaxValue).IsNullable(prop);
             }
+            else if (typeof(Coordinate) == actualType)
+            {
+                column.AsString(int.MaxValue).IsNullable(prop);
+                continue;
+            }
+            else
+                throw new NotSupportedException(
+                    $"Table: {tableName}, Unsupported property type {actualType.FullName} on {modelType.Name}.{prop.Name}"
+                );
         }
         return migration;
     }

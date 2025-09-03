@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 
 namespace YATT.Tests.Migrations;
@@ -13,6 +14,10 @@ public class MigrationBaseTest : IClassFixture<TestFixture>
         this.testFixture = testFixture;
     }
 
+    public IServiceCollection GetServiceCollection()
+    {
+        return testFixture.serviceCollection;
+    }
     public IServiceProvider GetServiceProvider()
     {
         return testFixture.serviceScope.ServiceProvider;

@@ -1,4 +1,4 @@
-namespace YATT.Migrations.ListMigration.ModelMigration1;
+namespace YATT.Migrations.ListMigration.TableMigration1;
 
 public class Coordinate
 {
@@ -12,4 +12,3 @@ public class Coordinate
         Longitude = longitude;
     }
 }
-
