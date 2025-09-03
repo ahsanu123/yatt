@@ -3,10 +3,11 @@ using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using YATT.Libs.Databases;
 using YATT.Migrations.Configs;
-using YATT.Migrations.ListMigration;
-using YattIdentityRole = YATT.Migrations.ListMigration.TableMigration1.IdentityRole;
-using YattIdentityUser = YATT.Migrations.ListMigration.TableMigration1.IdentityUser;
+
+using YattIdentityRole = YATT.Libs.Models.IdentityRole;
+using YattIdentityUser = YATT.Libs.Models.IdentityUser;
 
 namespace YATT.Migrations.Extensions;
 

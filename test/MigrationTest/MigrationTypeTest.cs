@@ -6,8 +6,9 @@ using YATT.Migrations.Configs;
 using YATT.Migrations.Extensions;
 using YATT.Migrations.ListMigration;
 using YATT.Migrations.Mappers;
-using YattIdentityRole = YATT.Migrations.ListMigration.TableMigration1.IdentityRole;
-using YattIdentityUser = YATT.Migrations.ListMigration.TableMigration1.IdentityUser;
+
+using YattIdentityRole = YATT.Libs.Models.IdentityRole;
+using YattIdentityUser = YATT.Libs.Models.IdentityUser;
 
 namespace YATT.Tests.Migrations;
 

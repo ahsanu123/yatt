@@ -4,10 +4,10 @@ using LinqToDB.DataProvider;
 using LinqToDB.DataProvider.SqlServer;
 using LinqToDB.Identity;
 
-using YattIdentityRole = YATT.Migrations.ListMigration.TableMigration1.IdentityRole;
-using YattIdentityUser = YATT.Migrations.ListMigration.TableMigration1.IdentityUser;
+using YattIdentityRole = YATT.Libs.Models.IdentityRole;
+using YattIdentityUser = YATT.Libs.Models.IdentityUser;
 
-namespace YATT.Migrations.ListMigration;
+namespace YATT.Libs.Databases;
 
 public class YattIdentityDataConnection : IdentityDataConnection<YattIdentityUser, YattIdentityRole, long>
 {

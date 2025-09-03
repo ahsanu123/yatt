@@ -1,6 +1,6 @@
 using System.Reflection;
 
-namespace YATT.Migrations.Attributes;
+namespace YATT.Libs.Attributes;
 
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 public class ForeignKeyAttribute : Attribute

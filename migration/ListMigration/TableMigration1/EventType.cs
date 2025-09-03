@@ -1,4 +1,4 @@
-using YATT.Migrations.Attributes;
+using YATT.Libs.Attributes;
 
 namespace YATT.Migrations.ListMigration.TableMigration1;
 

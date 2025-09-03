@@ -28,8 +28,8 @@
     </None>
   </ItemGroup>
 
-  <!-- <ItemGroup> -->
-  <!--   <ProjectReference Include="..\lib\yatt-lib.csproj" /> -->
-  <!-- </ItemGroup> -->
+  <ItemGroup>
+    <ProjectReference Include="..\lib\yatt-lib.csproj" />
+  </ItemGroup>
 
 </Project>

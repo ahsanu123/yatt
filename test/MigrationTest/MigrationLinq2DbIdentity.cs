@@ -1,10 +1,10 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
-using YATT.Libs.Extensions;
+using YATT.Migrations.Extensions;
 using YATT.Libs.Models;
-using YattIdentityRole = YATT.Migrations.ListMigration.TableMigration1.IdentityRole;
-using YattIdentityUser = YATT.Migrations.ListMigration.TableMigration1.IdentityUser;
+using YattIdentityRole = YATT.Libs.Models.IdentityRole;
+using YattIdentityUser = YATT.Libs.Models.IdentityUser;
 
 namespace YATT.Tests.Migrations;
 

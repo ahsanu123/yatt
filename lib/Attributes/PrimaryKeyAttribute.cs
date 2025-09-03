@@ -1,4 +1,4 @@
-namespace YATT.Migrations.Attributes;
+namespace YATT.Libs.Attributes;
 
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 public class PrimaryKeyAttribute : Attribute

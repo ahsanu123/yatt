@@ -3,7 +3,7 @@ using System.Data;
 using System.Reflection;
 using FluentMigrator;
 using FluentMigrator.Builders.Create.Table;
-using YATT.Migrations.Attributes;
+using YATT.Libs.Attributes;
 using YATT.Migrations.Extensions;
 using YATT.Migrations.ListMigration.TableMigration1;
 
