@@ -1,14 +1,8 @@
 ﻿using System.Reflection;
-using FluentMigrator.Runner;
-using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
-using YATT.Migrations.Configs;
-using YATT.Migrations.Extensions;
-using YATT.Migrations.ListMigration;
 using YATT.Migrations.Mappers;
 
 using YattIdentityRole = YATT.Libs.Models.IdentityRole;
-using YattIdentityUser = YATT.Libs.Models.IdentityUser;
 
 namespace YATT.Tests.Migrations;
 

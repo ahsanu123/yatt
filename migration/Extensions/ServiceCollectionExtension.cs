@@ -15,8 +15,12 @@ public static class ServiceCollectionExtension
 {
     public static IServiceCollection RegisterServices(this IServiceCollection services)
     {
+        var appSettingStream = YattAssembly.ExecutingAssembly.GetManifestResourceStream(
+            EmbeddedContentList.AppSetting
+        );
+
         IConfiguration configuration = new ConfigurationBuilder()
-            .AddJsonFile("appsettings.json")
+            .AddJsonStream(appSettingStream)
             .Build();
 
         var yattConnString = configuration.GetConnectionString(ConnectionStringConfig.YattDb);
@@ -73,6 +77,7 @@ public static class ServiceCollectionExtension
     {
         // csharpier-ignore-start
         services.AddOptions<YattDatabaseConfig>().Bind(configuration.GetSection(nameof(YattDatabaseConfig)));
+        services.AddOptions<YattConfig>().Bind(configuration.GetSection(nameof(YattConfig)));
 
         // csharpier-ignore-end
         return services;

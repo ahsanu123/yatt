@@ -5,6 +5,9 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <PublishSingleFile>true</PublishSingleFile>
+    <SelfContained>true</SelfContained>
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -24,14 +27,26 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
 
+  <!-- <ItemGroup> -->
+  <!--   <None Update="appsettings.json"> -->
+  <!--     <CopyToOutputDirectory>Always</CopyToOutputDirectory> -->
+  <!--   </None> -->
+  <!--   <None Update="Figlets/slant.flf"> -->
+  <!--     <CopyToOutputDirectory>Always</CopyToOutputDirectory> -->
+  <!--   </None> -->
+  <!-- </ItemGroup> -->
+
   <ItemGroup>
-    <None Update="appsettings.json">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
+    <EmbeddedResource Include="appsettings.json" />
+    <EmbeddedResource Include="Figlets/slant.flf" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\lib\yatt-lib.csproj" />
   </ItemGroup>
+
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);CS0114;CS8618;IL2091</NoWarn>
+  </PropertyGroup>
 
 </Project>

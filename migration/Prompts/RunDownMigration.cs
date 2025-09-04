@@ -20,22 +20,29 @@ public class RunDownMigration : BasePrompt, IPromptResult
         WriteLine("Select Migration Down To Run!");
 
         var latestMigratedVersion = _versionLoader.VersionInfo.Latest();
-        var selectedMigrationVersion = PromptChoicesToUser(
-            title: "Choose Version",
-            MigrationVersionList
-                .ListVersion.Where(pr => pr.Value.Version < latestMigratedVersion)
-                .ToArray(),
-            displayFunc: (pair) => pair.Key.ToPascalCaseWithSpace()
-        );
+        var listDownMigration = MigrationVersionList
+            .ListVersion.Where(pr => pr.Value.Version < latestMigratedVersion)
+            .ToArray();
 
-        WriteLine($"Wait Migrate Down To {selectedMigrationVersion.Key}...");
+        if (listDownMigration.Count() > 0)
+        {
+            var selectedMigrationVersion = PromptChoicesToUser(
+                title: "Choose Version",
+                choices: listDownMigration,
+                displayFunc: (pair) => pair.Key.ToPascalCaseWithSpace()
+            );
 
-        _migrationRunner.MigrateDown(selectedMigrationVersion.Value.Version);
+            WriteLine($"Wait Migrate Down To {selectedMigrationVersion.Key}...");
 
-        latestMigratedVersion = _versionLoader.VersionInfo.Latest();
+            _migrationRunner.MigrateDown(selectedMigrationVersion.Value.Version);
 
-        if (latestMigratedVersion == selectedMigrationVersion.Value.Version)
-            WriteLine($"Success To Migrate Down To {selectedMigrationVersion.Key}");
+            latestMigratedVersion = _versionLoader.VersionInfo.Latest();
+
+            if (latestMigratedVersion == selectedMigrationVersion.Value.Version)
+                WriteLine($"Success To Migrate Down To {selectedMigrationVersion.Key}");
+        }
+        else
+            WriteLine("Database Still Empty, cant do Down Migration");
 
         return PromptWhatNext();
     }
