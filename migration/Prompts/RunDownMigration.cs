@@ -17,7 +17,6 @@ public class RunDownMigration : BasePrompt, IPromptResult
 
     public override PromptResult Run()
     {
-        WriteLine("Select Migration Down To Run!");
 
         var latestMigratedVersion = _versionLoader.VersionInfo.Latest();
         var listDownMigration = MigrationVersionList
@@ -26,6 +25,8 @@ public class RunDownMigration : BasePrompt, IPromptResult
 
         if (listDownMigration.Count() > 0)
         {
+            WriteLine("Select Migration Down To Run!");
+
             var selectedMigrationVersion = PromptChoicesToUser(
                 title: "Choose Version",
                 choices: listDownMigration,

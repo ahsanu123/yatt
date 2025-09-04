@@ -14,6 +14,7 @@ public static class PromptsExtension
         services.AddSingleton<Exit>();
         services.AddSingleton<RunUpMigration>();
         services.AddSingleton<RunDownMigration>();
+        services.AddSingleton<Help>();
 
         return services;
     }
@@ -43,6 +44,8 @@ public static class PromptsExtension
 
             nextPrompt = prompt.Run();
         }
+
+        AnsiConsole.WriteLine("Goodbye...");
     }
 
     public static PromptResult PromptResult(this IRunPrompt runPrompt) =>

@@ -35,7 +35,7 @@ public class ListMigrated : BasePrompt, IPromptResult
             );
         }
         else
-            AnsiConsole.WriteLine("No Migrated Version.");
+            WriteLine("Database Still Empty Migrate Now!.");
 
         return PromptWhatNext();
     }

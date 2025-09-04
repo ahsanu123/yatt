@@ -34,6 +34,7 @@ public class MainMenu : BasePrompt, IPromptResult
             {
                 ListAvailableVersion.GetPromptResult(),
                 ListMigrated.GetPromptResult(),
+                Help.GetPromptResult()
             }
         );
     }

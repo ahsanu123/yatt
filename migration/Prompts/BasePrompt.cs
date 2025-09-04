@@ -8,7 +8,7 @@ public abstract class BasePrompt : IRunPrompt
 {
     public void WriteLine(string text)
     {
-        AnsiConsole.WriteLine(text);
+        AnsiConsole.WriteLine($"- {text}");
     }
     public void DisplayPanel<T>(
         string headerText,
@@ -44,6 +44,9 @@ public abstract class BasePrompt : IRunPrompt
 
         selection.Converter = displayFunc;
 
+        var padding = new Padder(new Text(" ")).PadTop(1);
+
+        AnsiConsole.Write(padding);
         return AnsiConsole.Prompt<T>(selection);
     }
 

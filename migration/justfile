@@ -4,4 +4,8 @@ build-release:
   dotnet build --configuration Release --self-contained --verbosity detailed
 
 publish-release: 
-  dotnet publish -c Release --self-contained true -p:PublishSingleFile=true -p:EnableCompressionInSingleFile=true
+  dotnet publish  -c Release \
+                  --self-contained true \
+                  -p:PublishSingleFile=true \
+                  -p:EnableCompressionInSingleFile=true \
+                  -p:IncludeNativeLibrariesForSelfExtract=true

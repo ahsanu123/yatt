@@ -2,6 +2,9 @@
 using YATT.Migrations.Extensions;
 using YATT.Migrations.Prompts;
 
+Console.Clear();
+Console.WriteLine("Loading...");
+
 var serviceCollection = new ServiceCollection();
 serviceCollection.RegisterServices();
 
