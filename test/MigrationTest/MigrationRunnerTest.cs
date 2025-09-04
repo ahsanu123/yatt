@@ -1,4 +1,5 @@
 ﻿using FluentMigrator.Runner;
+using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
 using YATT.Migrations.Configs;
@@ -32,7 +33,7 @@ public class MigrationRunnerTest : MigrationBaseTest
         Assert.NotNull(versionLoader);
         Assert.NotNull(yattDatabaseConfig);
 
-        migrationRunner.MigrateDown(MigrationVersionList.version0);
+        migrationRunner.MigrateDown(MigrationVersionList.Version0);
     }
 
     [Fact]
@@ -81,6 +82,11 @@ public class MigrationRunnerTest : MigrationBaseTest
         Assert.NotNull(yattDatabaseConfig);
 
         migrationRunner.MigrateUp(MigrationVersionList.Version2);
+    }
+
+    [Fact]
+    public void ListMigrationVersion()
+    {
     }
 
     [Fact]

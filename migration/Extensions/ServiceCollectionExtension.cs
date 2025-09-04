@@ -36,6 +36,7 @@ public static class ServiceCollectionExtension
             .AddLogging();
 
         services.AddAspnetCoreIdentity(connectionString: yattConnString!);
+        services.AddPromptServices();
 
         return services;
     }

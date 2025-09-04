@@ -12,4 +12,8 @@
     <PackageReference Include="linq2db.Identity" Version="4.0.0" />
   </ItemGroup>
 
+  <PropertyGroup>
+    <NoWarn>$(NoWarn);CS0114;CS8618</NoWarn>
+  </PropertyGroup>
+
 </Project>

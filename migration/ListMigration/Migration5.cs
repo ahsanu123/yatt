@@ -3,8 +3,8 @@ using YATT.Migrations.ListMigration.TableMigration1;
 
 namespace YATT.Migrations.ListMigration;
 
-[Migration(MigrationVersionList.Version1, description: MigrationVersionList.DescriptionVersion1)]
-public class Migration1 : BaseMigrationRunner
+[Migration(MigrationVersionList.Version5, description: MigrationVersionList.DescriptionVersion5)]
+public class Migration5 : BaseMigrationRunner
 {
     public MigrationChain MigrationChain = new MigrationChain()
         .AddType(typeof(Location))
@@ -19,11 +19,11 @@ public class Migration1 : BaseMigrationRunner
 
     public override void Up()
     {
-        RunUp(MigrationChain);
+        AddForeignKey(MigrationChain);
     }
 
     public override void Down()
     {
-        RunDown(MigrationChain);
+        RemoveForeignKey(MigrationChain);
     }
 }

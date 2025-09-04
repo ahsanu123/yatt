@@ -3,7 +3,7 @@ using YATT.Migrations.ListMigration.TableMigration1;
 
 namespace YATT.Migrations.ListMigration;
 
-[Migration(MigrationVersionList.Version2, description: "add foreign key to table")]
+[Migration(MigrationVersionList.Version2, description: MigrationVersionList.DescriptionVersion2)]
 public class Migration2 : BaseMigrationRunner
 {
     public MigrationChain MigrationChain = new MigrationChain()
