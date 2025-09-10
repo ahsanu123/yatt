@@ -4,7 +4,6 @@ namespace YATT.Api.Extensions;
 
 public static class ConfigurationExtension
 {
-
     public static IServiceCollection AddConfig(
         this IServiceCollection services,
         IConfiguration configuration
@@ -17,9 +16,3 @@ public static class ConfigurationExtension
         return services;
     }
 }
-
-// IConfiguration configuration = new ConfigurationBuilder()
-//     .AddJsonStream(appSettingStream!)
-//     .Build();
-//
-// var yattConnString = configuration.GetConnectionString(ConnectionStringConfig.YattDb);

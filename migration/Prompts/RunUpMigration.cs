@@ -19,6 +19,7 @@ public class RunUpMigration : BasePrompt, IPromptResult
     {
         WriteLine("Select Migration Up To Run!");
 
+        _versionLoader.LoadVersionInfo();
         var latestMigratedVersion = _versionLoader.VersionInfo.Latest();
 
         var selectedMigrationVersion = PromptChoicesToUser(

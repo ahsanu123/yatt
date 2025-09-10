@@ -51,7 +51,7 @@ public static class ServiceCollectionExtension
         string connectionString
     )
     {
-        var connectionFactory = new YattDefaultConnectionFactory(connectionString);
+        var connectionFactory = new YattIdentityDefaultConnectionFactory(connectionString);
 
         services
             .AddIdentity<YattIdentityUser, YattIdentityRole>()

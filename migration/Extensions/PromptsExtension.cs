@@ -33,16 +33,35 @@ public static class PromptsExtension
 
         while (nextPrompt.NextAction != EnumPromptAction.Exit)
         {
-            Console.Clear();
-            var prompt = service.GetService(nextPrompt.NextPrompt) as IRunPrompt;
 
-            if (prompt == null)
+            try
             {
-                AnsiConsole.WriteLine($"Cant Find Prompt Class: {nextPrompt.NextPrompt.FullName}");
-                break;
-            }
+                Console.Clear();
+                var prompt = service.GetService(nextPrompt.NextPrompt) as IRunPrompt;
 
-            nextPrompt = prompt.Run();
+                if (prompt == null)
+                {
+                    AnsiConsole.WriteLine($"Cant Find Prompt Class: {nextPrompt.NextPrompt.FullName}");
+                    break;
+                }
+
+                nextPrompt = prompt.Run();
+            }
+            catch (System.Exception e)
+            {
+                nextPrompt = MainMenu.GetPromptResult();
+
+                Console.Clear();
+
+                AnsiConsole.WriteLine("Ooops..., Somethink Error.");
+                AnsiConsole.WriteLine("---");
+
+                AnsiConsole.WriteException(e);
+
+                AnsiConsole.WriteLine("---");
+                AnsiConsole.WriteLine("Enter To Go Main Menu");
+                Console.ReadLine();
+            }
         }
 
         AnsiConsole.WriteLine("Goodbye...");

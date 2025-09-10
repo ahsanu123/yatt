@@ -15,11 +15,11 @@ public class YattIdentityDataConnection
         : base(dataProvider, connectionString) { }
 }
 
-public class YattDefaultConnectionFactory : IConnectionFactory
+public class YattIdentityDefaultConnectionFactory : IConnectionFactory
 {
     protected string ConnectionString { get; set; }
 
-    public YattDefaultConnectionFactory(string connectionString)
+    public YattIdentityDefaultConnectionFactory(string connectionString)
     {
         ConnectionString = connectionString;
     }
