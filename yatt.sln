@@ -11,6 +11,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yatt-test", "test\yatt-test
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yatt-migration", "migration\yatt-migration.csproj", "{D9DDF536-817F-43AB-9979-B4D0073A5FFE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "yatt-desktop", "desktop\yatt-desktop.csproj", "{6842D864-2ED2-4C0A-A43D-CADF13BFDFC3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -36,5 +38,9 @@ Global
 		{D9DDF536-817F-43AB-9979-B4D0073A5FFE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D9DDF536-817F-43AB-9979-B4D0073A5FFE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D9DDF536-817F-43AB-9979-B4D0073A5FFE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6842D864-2ED2-4C0A-A43D-CADF13BFDFC3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6842D864-2ED2-4C0A-A43D-CADF13BFDFC3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6842D864-2ED2-4C0A-A43D-CADF13BFDFC3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6842D864-2ED2-4C0A-A43D-CADF13BFDFC3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
