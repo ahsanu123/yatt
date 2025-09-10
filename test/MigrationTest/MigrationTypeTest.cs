@@ -1,4 +1,5 @@
-﻿using System.Reflection;
+﻿using System.Globalization;
+using System.Reflection;
 using Xunit.Abstractions;
 using YATT.Migrations.Mappers;
 
@@ -24,5 +25,24 @@ public class MigrationTestTest : MigrationBaseTest
         }
     }
 
+    [Fact]
+    public void CheckDecimalType()
+    {
+        var type = typeof(decimal);
+
+        _output.WriteLine(type.Name);
+    }
+
+    [Fact]
+    public void ListCulture()
+    {
+        foreach (var culture in CultureInfo.GetCultures(CultureTypes.SpecificCultures))
+        {
+            var region = new RegionInfo(culture.Name);
+
+            _output.WriteLine($"{region.DisplayName} -> {region.ISOCurrencySymbol}");
+
+        }
+    }
 
 }

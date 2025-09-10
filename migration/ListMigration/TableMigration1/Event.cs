@@ -17,6 +17,4 @@ public class Event
 
     public DateTimeOffset Date { get; set; }
 
-    // Persons -> use EventPerson
-
 }

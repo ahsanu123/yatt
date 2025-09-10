@@ -188,7 +188,10 @@ public static class ModelToMigration
             else if (typeof(Coordinate) == actualType)
             {
                 column.AsString(int.MaxValue).IsNullable(prop);
-                continue;
+            }
+            else if (typeof(decimal) == actualType)
+            {
+                column.AsDecimal().IsNullable(prop);
             }
             else
                 throw new NotSupportedException(

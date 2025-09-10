@@ -7,6 +7,9 @@ public class TimeLog
     [PrimaryKey]
     public long Id { get; set; }
 
+    [ForeignKey(typeof(Project), propName: nameof(Project.Id))]
+    public long ProjectId { get; set; }
+
     public string Summary { get; set; } = String.Empty;
 
     public string Description { get; set; } = String.Empty;
