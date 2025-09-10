@@ -1,4 +1,4 @@
-namespace YATT.Migrations.Configs;
+namespace YATT.Libs.Configs;
 
 public class YattDatabaseConfig
 {

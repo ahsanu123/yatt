@@ -17,7 +17,6 @@ public class RunDownMigration : BasePrompt, IPromptResult
 
     public override PromptResult Run()
     {
-
         var latestMigratedVersion = _versionLoader.VersionInfo.Latest();
         var listDownMigration = MigrationVersionList
             .ListVersion.Where(pr => pr.Value.Version < latestMigratedVersion)

@@ -1,8 +1,9 @@
 using YATT.Libs.Attributes;
+using YATT.Libs.Models;
 
 namespace YATT.Migrations.ListMigration.TableMigration1;
 
-public class Monetary
+public class Monetary : IBaseModel
 {
     [PrimaryKey]
     public long Id { get; set; }
@@ -16,5 +17,4 @@ public class Monetary
     public DateTimeOffset CreatedDate { get; set; }
 
     public bool Active { get; set; }
-
 }

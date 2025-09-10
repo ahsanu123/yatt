@@ -18,9 +18,9 @@ public class MigrationBaseTest : IClassFixture<TestFixture>
     {
         return testFixture.serviceCollection;
     }
+
     public IServiceProvider GetServiceProvider()
     {
         return testFixture.serviceScope.ServiceProvider;
     }
-
 }

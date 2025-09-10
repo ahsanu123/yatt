@@ -28,6 +28,5 @@ public class YattUserManager : UserManager<YattIdentityUser>
             errors,
             services,
             logger
-        )
-    { }
+        ) { }
 }

@@ -10,4 +10,3 @@ public class TeamPersonKey
     [ForeignKey(typeof(Person), propName: nameof(Person.Id))]
     public long PersonId { get; set; }
 }
-

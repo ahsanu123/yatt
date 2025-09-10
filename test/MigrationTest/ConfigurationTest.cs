@@ -1,6 +1,6 @@
 using Xunit.Abstractions;
+using YATT.Libs.Configs;
 using YATT.Migrations.Extensions;
-using YATT.Migrations.Configs;
 
 namespace YATT.Tests.Migrations;
 

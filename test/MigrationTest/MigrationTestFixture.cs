@@ -1,5 +1,5 @@
-using YATT.Migrations.Extensions;
 using Microsoft.Extensions.DependencyInjection;
+using YATT.Migrations.Extensions;
 
 namespace YATT.Tests.Migrations;
 

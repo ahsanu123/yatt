@@ -1,5 +1,6 @@
 using Microsoft.Extensions.Options;
 using Spectre.Console;
+using YATT.Libs.Configs;
 using YATT.Migrations.Configs;
 
 namespace YATT.Migrations.Prompts;
@@ -34,7 +35,7 @@ public class MainMenu : BasePrompt, IPromptResult
             {
                 ListAvailableVersion.GetPromptResult(),
                 ListMigrated.GetPromptResult(),
-                Help.GetPromptResult()
+                Help.GetPromptResult(),
             }
         );
     }

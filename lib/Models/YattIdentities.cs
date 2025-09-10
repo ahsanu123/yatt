@@ -144,7 +144,6 @@ public class IdentityUserLogin : IdentityUserLogin<long>
 
     [Column]
     public virtual string ProviderDisplayName { get; set; }
-
 }
 
 [Table(nameof(IdentityUserRole))]
@@ -175,4 +174,3 @@ public class IdentityUserToken : IdentityUserToken<long>
     [Column]
     public override string Value { get; set; }
 }
-

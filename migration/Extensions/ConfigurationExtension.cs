@@ -1,8 +1,8 @@
 using Dapper;
-using YATT.Migrations.Extensions;
 using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using YATT.Libs.Configs;
 using YATT.Migrations.Configs;
 
 namespace YATT.Migrations.Extensions;

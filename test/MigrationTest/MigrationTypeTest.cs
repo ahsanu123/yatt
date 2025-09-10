@@ -2,7 +2,6 @@
 using System.Reflection;
 using Xunit.Abstractions;
 using YATT.Migrations.Mappers;
-
 using YattIdentityRole = YATT.Libs.Models.IdentityRole;
 
 namespace YATT.Tests.Migrations;
@@ -15,8 +14,9 @@ public class MigrationTestTest : MigrationBaseTest
     [Fact]
     public void CheckPropsInsideInheritedClass()
     {
-        var props = typeof(YattIdentityRole)
-            .GetProperties(BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy);
+        var props = typeof(YattIdentityRole).GetProperties(
+            BindingFlags.Public | BindingFlags.Instance | BindingFlags.FlattenHierarchy
+        );
 
         foreach (var p in props)
         {
@@ -41,8 +41,6 @@ public class MigrationTestTest : MigrationBaseTest
             var region = new RegionInfo(culture.Name);
 
             _output.WriteLine($"{region.DisplayName} -> {region.ISOCurrencySymbol}");
-
         }
     }
-
 }

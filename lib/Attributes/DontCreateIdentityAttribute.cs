@@ -1,4 +1,3 @@
-
 namespace YATT.Libs.Attributes;
 
 [AttributeUsage(AttributeTargets.Class, AllowMultiple = false)]

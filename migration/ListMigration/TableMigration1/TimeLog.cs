@@ -1,8 +1,9 @@
 using YATT.Libs.Attributes;
+using YATT.Libs.Models;
 
 namespace YATT.Migrations.ListMigration.TableMigration1;
 
-public class TimeLog
+public class TimeLog : IBaseModel
 {
     [PrimaryKey]
     public long Id { get; set; }
@@ -18,4 +19,3 @@ public class TimeLog
 
     public DateTimeOffset Date { get; set; }
 }
-

@@ -23,5 +23,4 @@ public class TimeSpanTest : MigrationBaseTest
 
         _output.SerializeObject(parsedTimeSpan);
     }
-
 }

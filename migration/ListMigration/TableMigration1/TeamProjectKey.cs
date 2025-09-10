@@ -10,4 +10,3 @@ public class TeamProjectKey
     [ForeignKey(typeof(Project), propName: nameof(Project.Id))]
     public long ProjectId { get; set; }
 }
-

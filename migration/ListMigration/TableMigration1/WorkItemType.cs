@@ -1,16 +1,15 @@
-using YATT.Libs.Attributes;
+using LinqToDB.Mapping;
+using YATT.Libs.Models;
 
 namespace YATT.Migrations.ListMigration.TableMigration1;
 
-public class WorkItemType
+public class WorkItemType : IBaseModel
 {
     [PrimaryKey]
     public long Id { get; set; }
-
     public string Name { get; set; } = String.Empty;
 
     public string Description { get; set; } = String.Empty;
 
     public DateTimeOffset CreatedDate { get; set; }
 }
-

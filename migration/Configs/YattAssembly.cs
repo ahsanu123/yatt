@@ -6,5 +6,6 @@ public static class YattAssembly
 {
     public static Assembly ExecutingAssembly => Assembly.GetExecutingAssembly();
 
-    public static Stream? GetManifestResourceStream(string contentName) => ExecutingAssembly.GetManifestResourceStream(contentName);
+    public static Stream? GetManifestResourceStream(string contentName) =>
+        ExecutingAssembly.GetManifestResourceStream(contentName);
 }

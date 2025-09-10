@@ -1,8 +1,9 @@
 using YATT.Libs.Attributes;
+using YATT.Libs.Models;
 
 namespace YATT.Migrations.ListMigration.TableMigration1;
 
-public class EventPerson
+public class EventPerson : IBaseModel
 {
     [PrimaryKey]
     public long Id { get; set; }
@@ -13,4 +14,3 @@ public class EventPerson
     [ForeignKey(typeof(Person), propName: nameof(Person.Id))]
     public long PersonId { get; set; }
 }
-

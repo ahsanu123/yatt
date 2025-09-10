@@ -6,5 +6,4 @@ public static class TaskExtension
     {
         return task.GetAwaiter().GetResult();
     }
-
 }

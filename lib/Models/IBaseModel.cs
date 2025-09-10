@@ -1,8 +1,8 @@
+using YATT.Libs.Attributes;
 
 namespace YATT.Libs.Models;
 
-public class Project
+public interface IBaseModel
 {
     public long Id { get; set; }
 }
-

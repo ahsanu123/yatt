@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace YATT.Controllers;
+namespace YATT.Api.Controllers;
 
 [ApiController]
 [Route("[controller]")]

@@ -11,4 +11,3 @@ serviceCollection.RegisterServices();
 var serviceProvider = serviceCollection.BuildServiceProvider();
 
 serviceProvider.RunPrompts(typeof(MainMenu));
-

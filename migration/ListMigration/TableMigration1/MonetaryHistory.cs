@@ -1,8 +1,9 @@
 using YATT.Libs.Attributes;
+using YATT.Libs.Models;
 
 namespace YATT.Migrations.ListMigration.TableMigration1;
 
-public class MonetaryHistory
+public class MonetaryHistory : IBaseModel
 {
     [PrimaryKey]
     public long Id { get; set; }

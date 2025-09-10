@@ -1,9 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
-using YATT.Libs.Identities;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
-using YATT.Migrations.Extensions;
+using YATT.Libs.Identities;
 using YATT.Libs.Models;
+using YATT.Migrations.Extensions;
 using YattIdentityRole = YATT.Libs.Models.IdentityRole;
 using YattIdentityUser = YATT.Libs.Models.IdentityUser;
 
@@ -64,8 +64,9 @@ public class MigrationLinq2DbIdentityTest : MigrationBaseTest
         Assert.NotNull(userStore);
         Assert.NotNull(roleStore);
 
-
-        var userAlreadyExits = userStore.FindByNameAsync("Ahsanu".ToUpper(), CancellationToken.None).GetValue() != null;
+        var userAlreadyExits =
+            userStore.FindByNameAsync("Ahsanu".ToUpper(), CancellationToken.None).GetValue()
+            != null;
 
         if (!userAlreadyExits)
         {
@@ -74,10 +75,8 @@ public class MigrationLinq2DbIdentityTest : MigrationBaseTest
 
             _output.SerializeObject(result);
         }
-
         else
             _output.WriteLine("Username Already Exists");
-
     }
 
     [Fact]

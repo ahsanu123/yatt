@@ -1,4 +1,3 @@
-
 namespace YATT.Migrations.ListMigration;
 
 public interface IInitiaMigration

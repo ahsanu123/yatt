@@ -1,12 +1,12 @@
 using YATT.Libs.Attributes;
+using YATT.Libs.Models;
 
 namespace YATT.Migrations.ListMigration.TableMigration1;
 
-public class Location
+public class Location : IBaseModel
 {
     [PrimaryKey]
     public long Id { get; set; }
-
     public string Name { get; set; } = String.Empty;
 
     public Coordinate? Coordinate { get; set; }

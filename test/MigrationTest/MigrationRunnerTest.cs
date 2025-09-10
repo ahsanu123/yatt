@@ -1,8 +1,7 @@
 ﻿using FluentMigrator.Runner;
-using System.Reflection;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
-using YATT.Migrations.Configs;
+using YATT.Libs.Configs;
 using YATT.Migrations.Extensions;
 using YATT.Migrations.ListMigration;
 
@@ -85,9 +84,7 @@ public class MigrationRunnerTest : MigrationBaseTest
     }
 
     [Fact]
-    public void ListMigrationVersion()
-    {
-    }
+    public void ListMigrationVersion() { }
 
     [Fact]
     public void WhatByteLookLike()
@@ -101,8 +98,11 @@ public class MigrationRunnerTest : MigrationBaseTest
         _output.WriteLine(arrayOfByte.FullName);
         _output.WriteLine($"is array: {arrayOfByte.IsArray}");
 
-        _output.WriteLine($"Array of byte is not same with byte: {(byteType == arrayOfByte).ToString()}");
-        _output.WriteLine($"Array of byte is same with array of byte: {(typeof(byte[]) == arrayOfByte).ToString()}");
+        _output.WriteLine(
+            $"Array of byte is not same with byte: {(byteType == arrayOfByte).ToString()}"
+        );
+        _output.WriteLine(
+            $"Array of byte is same with array of byte: {(typeof(byte[]) == arrayOfByte).ToString()}"
+        );
     }
-
 }

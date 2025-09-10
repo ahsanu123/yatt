@@ -6,7 +6,4 @@ public interface IColumnModifierAndDataMapper
     public void CreateTable();
     public void AlterTable();
     public void Run();
-
 }
-
-

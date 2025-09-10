@@ -7,5 +7,5 @@ public enum UserRoles
     ProjectLeader,
     AccountingDepartmentMember,
     ProjectManager,
-    SystemAdministrator
+    SystemAdministrator,
 }

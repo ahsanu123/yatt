@@ -1,5 +1,4 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-
   <PropertyGroup>
     <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
@@ -9,7 +8,6 @@
     <SelfContained>true</SelfContained>
     <DebugType>embedded</DebugType>
   </PropertyGroup>
-
   <ItemGroup>
     <PackageReference Include="Dapper" Version="2.1.66" />
     <PackageReference Include="FluentMigrator" Version="7.1.0" />
@@ -23,10 +21,12 @@
     <PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Configuration.Json" Version="9.0.8" />
     <PackageReference Include="Microsoft.Extensions.Options" Version="9.0.8" />
-    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="9.0.8" />
+    <PackageReference
+      Include="Microsoft.Extensions.Options.ConfigurationExtensions"
+      Version="9.0.8"
+    />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
   </ItemGroup>
-
   <!-- <ItemGroup> -->
   <!--   <None Update="appsettings.json"> -->
   <!--     <CopyToOutputDirectory>Always</CopyToOutputDirectory> -->
@@ -35,18 +35,14 @@
   <!--     <CopyToOutputDirectory>Always</CopyToOutputDirectory> -->
   <!--   </None> -->
   <!-- </ItemGroup> -->
-
   <ItemGroup>
     <EmbeddedResource Include="appsettings.json" />
     <EmbeddedResource Include="Figlets/slant.flf" />
   </ItemGroup>
-
   <ItemGroup>
     <ProjectReference Include="..\lib\yatt-lib.csproj" />
   </ItemGroup>
-
   <PropertyGroup>
     <NoWarn>$(NoWarn);CS0114;CS8618;IL2091</NoWarn>
   </PropertyGroup>
-
 </Project>

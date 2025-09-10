@@ -4,6 +4,4 @@ using YATT.Migrations.Mappers;
 
 namespace YATT.Migrations.ListMigration;
 
-public static class MigrationUtility
-{
-}
+public static class MigrationUtility { }

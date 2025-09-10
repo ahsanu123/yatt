@@ -3,13 +3,13 @@ using LinqToDB.Data;
 using LinqToDB.DataProvider;
 using LinqToDB.DataProvider.SqlServer;
 using LinqToDB.Identity;
-
 using YattIdentityRole = YATT.Libs.Models.IdentityRole;
 using YattIdentityUser = YATT.Libs.Models.IdentityUser;
 
 namespace YATT.Libs.Databases;
 
-public class YattIdentityDataConnection : IdentityDataConnection<YattIdentityUser, YattIdentityRole, long>
+public class YattIdentityDataConnection
+    : IdentityDataConnection<YattIdentityUser, YattIdentityRole, long>
 {
     public YattIdentityDataConnection(IDataProvider dataProvider, string connectionString)
         : base(dataProvider, connectionString) { }

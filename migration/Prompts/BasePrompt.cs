@@ -10,6 +10,7 @@ public abstract class BasePrompt : IRunPrompt
     {
         AnsiConsole.WriteLine($"- {text}");
     }
+
     public void DisplayPanel<T>(
         string headerText,
         List<T> datas,
@@ -32,7 +33,8 @@ public abstract class BasePrompt : IRunPrompt
         T[] choices,
         Func<T, string> displayFunc,
         int pageSize = 5,
-        string moreChoicesMessage = "[grey](Move up and down for more options, wrong into this menu?, just Ctrl+C)[/]"
+        string moreChoicesMessage =
+            "[grey](Move up and down for more options, wrong into this menu?, just Ctrl+C)[/]"
     )
         where T : notnull
     {

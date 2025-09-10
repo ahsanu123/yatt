@@ -3,6 +3,7 @@ using FluentMigrator.Runner;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using YATT.Libs.Configs;
 using YATT.Libs.Databases;
 using YATT.Libs.Identities;
 using YATT.Migrations.Configs;
@@ -20,7 +21,7 @@ public static class ServiceCollectionExtension
         );
 
         IConfiguration configuration = new ConfigurationBuilder()
-            .AddJsonStream(appSettingStream)
+            .AddJsonStream(appSettingStream!)
             .Build();
 
         var yattConnString = configuration.GetConnectionString(ConnectionStringConfig.YattDb);
