@@ -21,7 +21,7 @@ public class GenericAddTest : AddBaseTest
 
         Assert.NotNull(configuration);
 
-        var clientId = configuration[GoogleAuthenticationConstant.AuthenticationClientId];
+        var clientId = configuration[GoogleAuthenticationConstant.ClientId];
 
         Assert.NotNull(clientId);
         _output.WriteLine(clientId);
