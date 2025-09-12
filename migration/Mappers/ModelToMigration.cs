@@ -11,6 +11,23 @@ namespace YATT.Migrations.Mappers;
 
 public static class ModelToMigration
 {
+    // csharpier-ignore
+    private static List<KeyValuePair<Type, Action<ICreateTableColumnAsTypeSyntax, PropertyInfo>>>
+      ClassTypeToDbTypes =>
+        new()
+        {
+            new(typeof(string),         (column, prop) => column.AsString(int.MaxValue).Nullable()),
+            new(typeof(bool),           (column, prop) => column.AsBoolean().IsNullable(prop)),
+            new(typeof(DateTime),       (column, prop) => column.AsDate().IsNullable(prop)),
+            new(typeof(DateTimeOffset), (column, prop) => column.AsDateTimeOffset().IsNullable(prop)),
+            new(typeof(double),         (column, prop) => column.AsDouble().IsNullable(prop)),
+            new(typeof(Int16),          (column, prop) => column.AsInt64().IsNullable(prop)),
+            new(typeof(float),          (column, prop) => column.AsFloat().IsNullable(prop)),
+            new(typeof(byte[]),         (column, prop) => column.AsBinary(int.MaxValue).IsNullable(prop)),
+            new(typeof(Coordinate),     (column, prop) => column.AsString(int.MaxValue).IsNullable(prop)),
+            new(typeof(decimal),        (column, prop) => column.AsDecimal().IsNullable(prop)),
+        };
+
     private static List<Type> ExludedTypes =>
         new List<Type>
         {
@@ -140,63 +157,20 @@ public static class ModelToMigration
                 column.AsInt64().Nullable().Identity().PrimaryKey();
                 continue;
             }
-            else if (foreignKeyAttr != null && !isDontCreateIdentity)
+            if (foreignKeyAttr != null && !isDontCreateIdentity)
             {
                 column.AsInt64().IsNullable(prop);
                 continue;
             }
-            else if (typeof(string) == actualType)
-            {
-                column.AsString(int.MaxValue).Nullable();
-            }
-            else if (typeof(bool) == actualType)
-            {
-                column.AsBoolean().IsNullable(prop);
-            }
-            else if (typeof(DateTime) == actualType)
-            {
-                column.AsDate().IsNullable(prop);
-            }
-            else if (typeof(DateTimeOffset) == actualType)
-            {
-                column.AsDateTimeOffset().IsNullable(prop);
-            }
-            else if (typeof(double) == actualType)
-            {
-                column.AsDouble().IsNullable(prop);
-            }
-            else if (typeof(Int16) == actualType)
-            {
-                column.AsInt16().IsNullable(prop);
-            }
-            else if (typeof(int) == actualType)
-            {
-                column.AsInt32().IsNullable(prop);
-            }
-            else if (typeof(Int64) == actualType)
-            {
-                column.AsInt64().IsNullable(prop);
-            }
-            else if (typeof(float) == actualType)
-            {
-                column.AsFloat().IsNullable(prop);
-            }
-            else if (typeof(byte[]) == actualType)
-            {
-                column.AsBinary(int.MaxValue).IsNullable(prop);
-            }
-            else if (typeof(Coordinate) == actualType)
-            {
-                column.AsString(int.MaxValue).IsNullable(prop);
-            }
-            else if (typeof(decimal) == actualType)
-            {
-                column.AsDecimal().IsNullable(prop);
-            }
-            else
+
+            var typeMapper = ClassTypeToDbTypes.FirstOrDefault(pr => pr.Key == actualType);
+
+            if (typeMapper.Key == null)
                 throw new NotSupportedException(
                     $"Table: {tableName}, Unsupported property type {actualType.FullName} on {modelType.Name}.{prop.Name}"
                 );
+
+            typeMapper.Value(column, prop);
         }
         return migration;
     }

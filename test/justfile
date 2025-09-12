@@ -1,5 +1,11 @@
+# test list
 tl: 
   dotnet test -t 
 
+# test filter
+tf filter: 
+  dotnet test -t | rg -i {{filter}}
+
+# test run
 tr TestName:
   dotnet test --logger="console;verbosity=detailed" --filter {{TestName}}

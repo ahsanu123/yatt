@@ -21,5 +21,6 @@
     <ProjectReference Include="..\lib\yatt-lib.csproj" />
     <ProjectReference Include="..\migration\yatt-migration.csproj" />
     <ProjectReference Include="..\desktop\yatt-desktop.csproj" />
+    <ProjectReference Include="..\add\yatt-add.csproj" />
   </ItemGroup>
 </Project>

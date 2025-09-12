@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace add.Data.Migrations
+namespace YATT.Add.Data.Migrations
 {
     public partial class CreateIdentitySchema : Migration
     {

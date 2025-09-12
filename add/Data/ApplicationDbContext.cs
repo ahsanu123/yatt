@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
-namespace add.Data;
+namespace YATT.Add.Data;
 
 public class ApplicationDbContext : IdentityDbContext
 {

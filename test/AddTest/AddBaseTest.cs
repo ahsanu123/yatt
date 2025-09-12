@@ -1,15 +1,15 @@
 using Xunit.Abstractions;
 
-namespace YATT.Tests.Api;
+namespace YATT.Tests.Add;
 
-public class ApiBaseTest : IClassFixture<TestWebApplicationFactory<YATT.Api.Program>>
+public class AddBaseTest : IClassFixture<TestWebApplicationFactory<YATT.Add.Program>>
 {
     protected readonly ITestOutputHelper _output;
-    protected readonly TestWebApplicationFactory<YATT.Api.Program> _factory;
+    protected readonly TestWebApplicationFactory<YATT.Add.Program> _factory;
     protected readonly HttpClient _httpClient;
 
-    public ApiBaseTest(
-        TestWebApplicationFactory<YATT.Api.Program> factory,
+    public AddBaseTest(
+        TestWebApplicationFactory<YATT.Add.Program> factory,
         ITestOutputHelper testOutputHelper
     )
     {

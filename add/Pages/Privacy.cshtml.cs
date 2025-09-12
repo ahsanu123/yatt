@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
-namespace add.Pages;
+namespace YATT.Add.Pages;
 
 public class PrivacyModel : PageModel
 {

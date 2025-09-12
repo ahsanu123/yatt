@@ -1,0 +1,16 @@
+
+# init secret 
+is: 
+  dotnet user-secrets init 
+
+# secret set 
+ss key value: 
+  dotnet user-secrets set "{{key}}" "{{value}}"
+
+# user secret alias 
+s: 
+  dotnet user-secrets
+
+# secret list 
+sl: 
+  dotnet user-secrets list 
