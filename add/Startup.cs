@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Options;
 using YATT.Add.AuthenticationProviders;
+using YATT.Add.Extensions;
 
 namespace YATT.Add;
 
@@ -159,38 +160,32 @@ public class Startup
                         );
                         refreshResponse.EnsureSuccessStatusCode();
 
-                        using (
-                            var payload = JsonDocument.Parse(
-                                await refreshResponse.Content.ReadAsStringAsync()
-                            )
+                        using var payload = JsonDocument.Parse(
+                            await refreshResponse.Content.ReadAsStringAsync()
+                        );
+                        // Persist the new acess token
+                        authProperties.UpdateTokenValue(
+                            "access_token",
+                            payload.RootElement.GetString("access_token")
+                        );
+                        refreshToken = payload.RootElement.GetString("refresh_token");
+                        if (!string.IsNullOrEmpty(refreshToken))
+                            authProperties.UpdateTokenValue("refresh_token", refreshToken);
+
+                        if (
+                            payload.RootElement.TryGetProperty("expires_in", out var property)
+                            && property.TryGetInt32(out var seconds)
                         )
                         {
-                            // Persist the new acess token
+                            var expiresAt = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
                             authProperties.UpdateTokenValue(
-                                "access_token",
-                                payload.RootElement.GetString("access_token")
+                                "expires_at",
+                                expiresAt.ToString("o", CultureInfo.InvariantCulture)
                             );
-                            refreshToken = payload.RootElement.GetString("refresh_token");
-                            if (!string.IsNullOrEmpty(refreshToken))
-                            {
-                                authProperties.UpdateTokenValue("refresh_token", refreshToken);
-                            }
-                            if (
-                                payload.RootElement.TryGetProperty("expires_in", out var property)
-                                && property.TryGetInt32(out var seconds)
-                            )
-                            {
-                                var expiresAt =
-                                    DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
-                                authProperties.UpdateTokenValue(
-                                    "expires_at",
-                                    expiresAt.ToString("o", CultureInfo.InvariantCulture)
-                                );
-                            }
-                            await context.SignInAsync(user, authProperties);
-
-                            await PrintRefreshedTokensAsync(response, payload, authProperties);
                         }
+                        await context.SignInAsync(user, authProperties);
+
+                        await PrintRefreshedTokensAsync(response, payload, authProperties);
                         return;
                     }
                     // https://developers.facebook.com/docs/facebook-login/access-tokens/expiration-and-extension
@@ -211,28 +206,27 @@ public class Startup
                         var refreshResponse = await options.Backchannel.GetStringAsync(
                             options.TokenEndpoint + query
                         );
-                        using (var payload = JsonDocument.Parse(refreshResponse))
-                        {
-                            authProperties.UpdateTokenValue(
-                                "access_token",
-                                payload.RootElement.GetString("access_token")
-                            );
-                            if (
-                                payload.RootElement.TryGetProperty("expires_in", out var property)
-                                && property.TryGetInt32(out var seconds)
-                            )
-                            {
-                                var expiresAt =
-                                    DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
-                                authProperties.UpdateTokenValue(
-                                    "expires_at",
-                                    expiresAt.ToString("o", CultureInfo.InvariantCulture)
-                                );
-                            }
-                            await context.SignInAsync(user, authProperties);
 
-                            await PrintRefreshedTokensAsync(response, payload, authProperties);
+                        using var payload = JsonDocument.Parse(refreshResponse);
+                        authProperties.UpdateTokenValue(
+                            "access_token",
+                            payload.RootElement.GetString("access_token")
+                        );
+                        if (
+                            payload.RootElement.TryGetProperty("expires_in", out var property)
+                            && property.TryGetInt32(out var seconds)
+                        )
+                        {
+                            var expiresAt = DateTimeOffset.UtcNow + TimeSpan.FromSeconds(seconds);
+                            authProperties.UpdateTokenValue(
+                                "expires_at",
+                                expiresAt.ToString("o", CultureInfo.InvariantCulture)
+                            );
                         }
+                        await context.SignInAsync(user, authProperties);
+
+                        await PrintRefreshedTokensAsync(response, payload, authProperties);
+
                         return;
                     }
 
@@ -288,6 +282,8 @@ public class Startup
             }
         );
 
+        app.AddMapTestCollection();
+
         app.Run(async context =>
         {
             // Setting DefaultAuthenticateScheme causes User to be set
@@ -312,6 +308,9 @@ public class Startup
                 return;
             }
 
+            var expiredDateString = await context.GetTokenAsync("expires_at") + "<br>";
+            var expiresAt = DateTimeOffset.Parse(expiredDateString);
+
             // Display user information
             var response = context.Response;
             response.ContentType = "text/html";
@@ -335,9 +334,7 @@ public class Startup
             await response.WriteAsync(
                 "Token Type: " + await context.GetTokenAsync("token_type") + "<br>"
             );
-            await response.WriteAsync(
-                "expires_at: " + await context.GetTokenAsync("expires_at") + "<br>"
-            );
+            await response.WriteAsync($"expires_at: {expiresAt.ToString()}<br>");
             await response.WriteAsync("<a href=\"/logout\">Logout</a><br>");
             await response.WriteAsync("<a href=\"/refresh_token\">Refresh Token</a><br>");
             await response.WriteAsync("</body></html>");
@@ -389,6 +386,9 @@ public class Startup
     )
     {
         response.ContentType = "text/html";
+
+        var expiredAt = DateTimeOffset.Parse(authProperties.GetTokenValue("expires_at"));
+
         await response.WriteAsync("<html><body>");
         await response.WriteAsync("Refreshed.<br>");
         await response.WriteAsync(
@@ -407,9 +407,7 @@ public class Startup
         await response.WriteAsync(
             "Token Type: " + authProperties.GetTokenValue("token_type") + "<br>"
         );
-        await response.WriteAsync(
-            "expires_at: " + authProperties.GetTokenValue("expires_at") + "<br>"
-        );
+        await response.WriteAsync($"expires_at: {expiredAt.ToString()} <br>");
 
         await response.WriteAsync("<a href=\"/\">Home</a><br>");
         await response.WriteAsync("<a href=\"/refresh_token\">Refresh Token</a><br>");

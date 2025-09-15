@@ -10,6 +10,7 @@ public class Program
 
         builder.Services.AddOpenApi();
         builder.Services.AddControllers();
+        builder.Services.AddGraphQl();
 
         builder.Services.AddServiceCollections();
 
@@ -21,8 +22,20 @@ public class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseWebSockets();
+        app.UseGraphQL();
+
+        app.UseGraphQLGraphiQL(
+            "/",
+            new GraphQL.Server.Ui.GraphiQL.GraphiQLOptions
+            {
+                GraphQLEndPoint = "/graphql",
+                SubscriptionsEndPoint = "/graphql",
+            }
+        );
 
         app.MapControllers();
+
         app.Run();
     }
 }
