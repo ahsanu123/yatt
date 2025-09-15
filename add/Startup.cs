@@ -1,6 +1,4 @@
 using System.Globalization;
-using System.Net.Http.Headers;
-using System.Security.Claims;
 using System.Text.Encodings.Web;
 using System.Text.Json;
 using Microsoft.AspNetCore.Authentication;
@@ -9,12 +7,11 @@ using Microsoft.AspNetCore.Authentication.Facebook;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.MicrosoftAccount;
 using Microsoft.AspNetCore.Authentication.OAuth;
-using Microsoft.AspNetCore.Authentication.Twitter;
 using Microsoft.AspNetCore.Http.Extensions;
 using Microsoft.Extensions.Options;
-using Yatt.Add.AuthenticationProviders;
+using YATT.Add.AuthenticationProviders;
 
-namespace Yatt.Add;
+namespace YATT.Add;
 
 /* Note all servers must use the same address and port because these are pre-registered with the various providers. */
 public class Startup

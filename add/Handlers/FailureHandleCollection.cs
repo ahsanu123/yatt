@@ -1,7 +1,7 @@
 using System.Text.Encodings.Web;
 using Microsoft.AspNetCore.Authentication;
 
-namespace Yatt.Add.Handlers;
+namespace YATT.Add.Handlers;
 
 public static class FailureHandleCollection
 {

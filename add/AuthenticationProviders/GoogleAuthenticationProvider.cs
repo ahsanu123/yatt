@@ -1,9 +1,9 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.OAuth;
-using Yatt.Add.Handlers;
+using YATT.Add.Handlers;
 
-namespace Yatt.Add.AuthenticationProviders;
+namespace YATT.Add.AuthenticationProviders;
 
 public static class GoogleAuthenticationProvider
 {

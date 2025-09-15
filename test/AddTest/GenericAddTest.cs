@@ -1,7 +1,6 @@
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit.Abstractions;
-using YATT.Add.Constants;
 
 namespace YATT.Tests.Add;
 
@@ -21,7 +20,7 @@ public class GenericAddTest : AddBaseTest
 
         Assert.NotNull(configuration);
 
-        var clientId = configuration[GoogleAuthenticationConstant.ClientId];
+        var clientId = configuration["YattAuthentication:Google:ClientId"];
 
         Assert.NotNull(clientId);
         _output.WriteLine(clientId);
